@@ -16,7 +16,6 @@ const inputArray = [
   `4 8 
 (2, 3, N) FLLFR 
 (1, 0, S) FFRLF`,
-  ``,
 ];
 
 const output = inputArray.map((input) => processAllRobots(input)).join("\n");
