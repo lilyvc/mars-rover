@@ -9,11 +9,9 @@ yarn install
 
 ## Usage
 
-1. Run the application:
+1. Run the program on a pre-defined array of inputs:
 
 ```bash
-# Using the compiled version
-
 yarn build
 yarn start
 ```
