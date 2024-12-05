@@ -50,13 +50,13 @@ describe("turn", () => {
   it("should return to starting orientation after 4 turns in same direction", () => {
     let orientation: Orientation = "N";
 
-    orientation = turn(orientation, "R"); // N -> E
-    orientation = turn(orientation, "R"); // E -> S
-    orientation = turn(orientation, "R"); // S -> W
-    orientation = turn(orientation, "R"); // W -> N
+    orientation = turn(orientation, "R");
+    orientation = turn(orientation, "R");
+    orientation = turn(orientation, "R");
+    orientation = turn(orientation, "R");
     expect(orientation).toBe("N");
 
-    orientation = turn(orientation, "R"); // N -> E
+    orientation = turn(orientation, "R");
     expect(orientation).toBe("E");
   });
 });
@@ -170,7 +170,7 @@ describe("Parse Input", () => {
 });
 
 describe("Complex Movement Scenarios", () => {
-  test("Multiple rovers with one reaching edge and getting lost", () => {
+  test("Two rovers with one getting lost", () => {
     const input = `4 8
 (2, 3, E) LFRFF
 (0, 2, N) FFLFRFF`;
@@ -182,13 +182,29 @@ describe("Complex Movement Scenarios", () => {
     expect(result).toBe(expected);
   });
 
-  test("Rovers with turning movements and southern boundary loss", () => {
+  test("Two rovers with one getting lost", () => {
     const input = `4 8
 (2, 3, N) FLLFR
 (1, 0, S) FFRLF`;
 
     const expected = `(2, 3, W)
 (1, 0, S) LOST`;
+
+    const result = processAllRobots(input);
+    expect(result).toBe(expected);
+  });
+
+  test("Four rovers with two getting lost", () => {
+    const input = `4 8
+(2, 3, N) FLLFR
+(1, 0, S) FFRLF
+(2, 3, E) LFRFF
+(0, 2, N) FFLFRFF`;
+
+    const expected = `(2, 3, W)
+(1, 0, S) LOST
+(4, 4, E)
+(0, 4, W) LOST`;
 
     const result = processAllRobots(input);
     expect(result).toBe(expected);
