@@ -4,10 +4,7 @@ import { Grid, Position, Robot } from "./shared.types";
 
 export const processCommands = (input: string): string => {
   const { grid, robots } = parseInput(input);
-  const results = robots.map((robot: Robot) => {
-    return processRobot(robot, grid);
-  });
-
+  const results = robots.map((robot: Robot) => processRobot(robot, grid));
   return results.join("\n");
 };
 

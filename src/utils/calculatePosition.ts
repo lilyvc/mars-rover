@@ -1,5 +1,7 @@
 import { Grid, Orientation, Position } from "../shared.types";
 
+type Direction = "L" | "R";
+
 export const calculatePosition = (
   initialPosition: Position,
   commands: string,
@@ -13,11 +15,11 @@ export const calculatePosition = (
     if (command === "L" || command === "R") {
       currentPosition.orientation = turn(currentPosition.orientation, command);
     } else if (command === "F") {
-      const [newX, newY] = moveForward(currentPosition);
-      if (isLost(newX, newY, grid)) {
+      const [nextX, nextY] = moveForward(currentPosition);
+      if (isLost(nextX, nextY, grid)) {
         lost = true;
       } else {
-        currentPosition = { ...currentPosition, x: newX, y: newY };
+        currentPosition = { ...currentPosition, x: nextX, y: nextY };
       }
     }
   }
@@ -30,7 +32,7 @@ export const calculatePosition = (
 
 export const turn = (
   currentOrientation: Orientation,
-  direction: "L" | "R"
+  direction: Direction
 ): Orientation => {
   const orientations: Orientation[] = ["N", "E", "S", "W"];
   const index = orientations.indexOf(currentOrientation);
