@@ -2,7 +2,7 @@ import { calculatePosition } from "./utils/calculatePosition";
 import { parseInput } from "./utils/parseInput";
 import { Grid, Position, Robot } from "./shared.types";
 
-export const processCommands = (input: string): string => {
+export const processAllRobots = (input: string): string => {
   const { grid, robots } = parseInput(input);
   const results = robots.map((robot: Robot) => processRobot(robot, grid));
   return results.join("\n");
@@ -34,7 +34,7 @@ function main() {
 (1, 0, S) FFRLF`,
     ``,
   ];
-  const output = inputArray.map((input) => processCommands(input)).join("\n");
+  const output = inputArray.map((input) => processAllRobots(input)).join("\n");
   console.log(output);
 }
 
