@@ -167,7 +167,7 @@ describe("Parse Input", () => {
   });
 });
 
-describe("Complex Movement Scenarios", () => {
+describe("End to end functionality", () => {
   test("Two rovers with one getting lost", () => {
     const input = `4 8
 (2, 3, E) LFRFF
