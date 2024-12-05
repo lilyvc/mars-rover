@@ -1,5 +1,14 @@
-import { Position, Grid, Robot } from "../shared.types";
+import { State, Grid, Robot } from "../shared.types";
 
+/**
+ * Parses raw input string into grid and robots
+ * @param input - Multiline string representing grid and robots: `4 8
+ *  (2, 3, E) LF
+ *  (0, 2, N) RF`
+ *
+ * @returns { grid: { width, height }, robots: [{ initialState, commands }] }
+ *
+ */
 export const parseInput = (input: string): { grid: Grid; robots: Robot[] } => {
   const lines = input.trim().split("\n");
   const grid = parseGrid(lines[0]);
@@ -13,13 +22,13 @@ export const parseGrid = (gridSize: string): Grid => {
 };
 
 export const parseRobot = (robotString: string): Robot => {
-  const [initialPositionString, commands] = robotString.split(") ");
-  const initialPosition = parsePosition(initialPositionString);
-  return { initialPosition, commands };
+  const [initialStateString, commands] = robotString.split(") ");
+  const initialState = parseState(initialStateString);
+  return { initialState, commands };
 };
 
-export const parsePosition = (positionPart: string): Position => {
-  const [x, y, orientation] = positionPart.replace(/[()]/g, "").split(" ");
+export const parseState = (StatePart: string): State => {
+  const [x, y, orientation] = StatePart.replace(/[()]/g, "").split(" ");
   return {
     x: parseInt(x),
     y: parseInt(y),

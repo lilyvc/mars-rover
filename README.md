@@ -9,7 +9,7 @@ yarn install
 
 ## Usage
 
-### Run the program on a pre-defined array of inputs:
+### Run the program on a pre-defined array of inputs
 
 ```bash
 yarn build

@@ -1,31 +1,38 @@
-import { Grid, Orientation, Position } from "../shared.types";
+import { Grid, Orientation, State } from "../shared.types";
 
 type Direction = "L" | "R";
 
-export const calculatePosition = (
-  initialPosition: Position,
+/**
+ * Processes a command string to move one robot
+ * @param initialState - Starting State {x, y, orientation}
+ * @param commands - String of commands (L/R/F)
+ * @param grid - Grid dimensions {width, height}
+ * @returns Final State and lost status
+ */
+export const calculateState = (
+  initialState: State,
   commands: string,
   grid: Grid
 ) => {
-  let currentPosition = { ...initialPosition };
+  let currentState = { ...initialState };
   let lost = false;
 
   for (const command of commands) {
     if (lost) break;
     if (command === "L" || command === "R") {
-      currentPosition.orientation = turn(currentPosition.orientation, command);
+      currentState.orientation = turn(currentState.orientation, command);
     } else if (command === "F") {
-      const [nextX, nextY] = moveForward(currentPosition);
+      const [nextX, nextY] = moveForward(currentState);
       if (isLost(nextX, nextY, grid)) {
         lost = true;
       } else {
-        currentPosition = { ...currentPosition, x: nextX, y: nextY };
+        currentState = { ...currentState, x: nextX, y: nextY };
       }
     }
   }
 
   return {
-    finalPosition: currentPosition,
+    finalState: currentState,
     lost,
   };
 };
@@ -41,8 +48,8 @@ export const turn = (
     : orientations[(index + 1) % 4];
 };
 
-export const moveForward = (currentPosition: Position): [number, number] => {
-  const { x, y, orientation } = currentPosition;
+export const moveForward = (currentState: State): [number, number] => {
+  const { x, y, orientation } = currentState;
   switch (orientation) {
     case "N":
       return [x, y + 1];

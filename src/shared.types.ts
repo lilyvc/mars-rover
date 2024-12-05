@@ -3,7 +3,7 @@ export interface Grid {
   height: number;
 }
 
-export interface Position {
+export interface State {
   x: number;
   y: number;
   orientation: "N" | "E" | "S" | "W";
@@ -12,6 +12,6 @@ export interface Position {
 export type Orientation = "N" | "E" | "S" | "W";
 
 export interface Robot {
-  initialPosition: Position;
+  initialState: State;
   commands: string;
 }

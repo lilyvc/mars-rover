@@ -1,6 +1,13 @@
-import { calculatePosition } from "./utils/calculatePosition";
+/**
+ * Main entry point for mars rover.
+ * Processes pre defined input string containing grid dimensions and robot commands,
+ * console logs final positions of all robots with their lost status.
+ *
+ */
+
+import { calculateState } from "./utils/calculateState";
 import { parseInput } from "./utils/parseInput";
-import { Grid, Position, Robot } from "./shared.types";
+import { Grid, State, Robot } from "./shared.types";
 
 export const processAllRobots = (input: string): string => {
   const { grid, robots } = parseInput(input);
@@ -9,19 +16,13 @@ export const processAllRobots = (input: string): string => {
 };
 
 const processRobot = (robot: Robot, grid: Grid): string => {
-  const { initialPosition, commands } = robot;
-  const { finalPosition, lost } = calculatePosition(
-    initialPosition,
-    commands,
-    grid
-  );
-  return formatResult(finalPosition, lost);
+  const { initialState, commands } = robot;
+  const { finalState, lost } = calculateState(initialState, commands, grid);
+  return formatResult(finalState, lost);
 };
 
-const formatResult = (position: Position, lost: boolean): string => {
-  return `(${position.x}, ${position.y}, ${position.orientation})${
-    lost ? " LOST" : ""
-  }`;
+const formatResult = (State: State, lost: boolean): string => {
+  return `(${State.x}, ${State.y}, ${State.orientation})${lost ? " LOST" : ""}`;
 };
 
 function main() {

@@ -1,33 +1,31 @@
 import { describe, expect, test } from "@jest/globals";
 import {
-  calculatePosition,
+  calculateState,
   isLost,
   moveForward,
   turn,
-} from "../src/utils/calculatePosition";
+} from "../src/utils/calculateState";
 import { parseInput } from "../src/utils/parseInput";
 import { processAllRobots } from "../src/index";
-import { Grid, Orientation, Position } from "../src/shared.types";
+import { Grid, Orientation, State } from "../src/shared.types";
 
-describe("calculatePosition", () => {
+describe("calculateState", () => {
   const grid: Grid = { width: 4, height: 8 };
 
   it("should process commands without getting lost", () => {
-    const initialPosition: Position = { x: 2, y: 3, orientation: "E" };
+    const initialState: State = { x: 2, y: 3, orientation: "E" };
     const commands = "LF";
     const expected = {
-      finalPosition: { x: 2, y: 4, orientation: "N" },
+      finalState: { x: 2, y: 4, orientation: "N" },
       lost: false,
     };
-    expect(calculatePosition(initialPosition, commands, grid)).toEqual(
-      expected
-    );
+    expect(calculateState(initialState, commands, grid)).toEqual(expected);
   });
 
   it("should handle robot getting lost", () => {
-    const initialPosition: Position = { x: 4, y: 8, orientation: "N" };
+    const initialState: State = { x: 4, y: 8, orientation: "N" };
     const commands = "F";
-    const result = calculatePosition(initialPosition, commands, grid);
+    const result = calculateState(initialState, commands, grid);
     expect(result.lost).toBe(true);
   });
 });
@@ -62,18 +60,18 @@ describe("turn", () => {
 });
 
 describe("moveForward", () => {
-  it("should calculate new position based on orientation", () => {
-    const position: Position = { x: 2, y: 3, orientation: "N" };
-    expect(moveForward(position)).toEqual([2, 4]);
+  it("should calculate new State based on orientation", () => {
+    const State: State = { x: 2, y: 3, orientation: "N" };
+    expect(moveForward(State)).toEqual([2, 4]);
 
-    position.orientation = "E";
-    expect(moveForward(position)).toEqual([3, 3]);
+    State.orientation = "E";
+    expect(moveForward(State)).toEqual([3, 3]);
 
-    position.orientation = "S";
-    expect(moveForward(position)).toEqual([2, 2]);
+    State.orientation = "S";
+    expect(moveForward(State)).toEqual([2, 2]);
 
-    position.orientation = "W";
-    expect(moveForward(position)).toEqual([1, 3]);
+    State.orientation = "W";
+    expect(moveForward(State)).toEqual([1, 3]);
   });
 });
 
@@ -94,52 +92,52 @@ describe("isLost", () => {
   });
 });
 
-describe("Calculate Position", () => {
+describe("Calculate State", () => {
   test("moves forward in each direction", () => {
     const grid = { width: 4, height: 8 };
 
-    expect(
-      calculatePosition({ x: 2, y: 2, orientation: "N" }, "F", grid)
-    ).toEqual({
-      finalPosition: { x: 2, y: 3, orientation: "N" },
-      lost: false,
-    });
+    expect(calculateState({ x: 2, y: 2, orientation: "N" }, "F", grid)).toEqual(
+      {
+        finalState: { x: 2, y: 3, orientation: "N" },
+        lost: false,
+      }
+    );
 
-    expect(
-      calculatePosition({ x: 2, y: 2, orientation: "E" }, "F", grid)
-    ).toEqual({
-      finalPosition: { x: 3, y: 2, orientation: "E" },
-      lost: false,
-    });
+    expect(calculateState({ x: 2, y: 2, orientation: "E" }, "F", grid)).toEqual(
+      {
+        finalState: { x: 3, y: 2, orientation: "E" },
+        lost: false,
+      }
+    );
   });
 
   test("rotates correctly", () => {
     const grid = { width: 4, height: 8 };
 
-    expect(
-      calculatePosition({ x: 2, y: 2, orientation: "N" }, "L", grid)
-    ).toEqual({
-      finalPosition: { x: 2, y: 2, orientation: "W" },
-      lost: false,
-    });
+    expect(calculateState({ x: 2, y: 2, orientation: "N" }, "L", grid)).toEqual(
+      {
+        finalState: { x: 2, y: 2, orientation: "W" },
+        lost: false,
+      }
+    );
 
-    expect(
-      calculatePosition({ x: 2, y: 2, orientation: "N" }, "R", grid)
-    ).toEqual({
-      finalPosition: { x: 2, y: 2, orientation: "E" },
-      lost: false,
-    });
+    expect(calculateState({ x: 2, y: 2, orientation: "N" }, "R", grid)).toEqual(
+      {
+        finalState: { x: 2, y: 2, orientation: "E" },
+        lost: false,
+      }
+    );
   });
 
   test("marks as lost when moving off grid", () => {
     const grid = { width: 4, height: 8 };
 
-    expect(
-      calculatePosition({ x: 0, y: 0, orientation: "S" }, "F", grid)
-    ).toEqual({
-      finalPosition: { x: 0, y: 0, orientation: "S" },
-      lost: true,
-    });
+    expect(calculateState({ x: 0, y: 0, orientation: "S" }, "F", grid)).toEqual(
+      {
+        finalState: { x: 0, y: 0, orientation: "S" },
+        lost: true,
+      }
+    );
   });
 });
 
@@ -153,7 +151,7 @@ describe("Parse Input", () => {
     expect(result.grid).toEqual({ width: 4, height: 8 });
     expect(result.robots).toEqual([
       {
-        initialPosition: { x: 2, y: 3, orientation: "E" },
+        initialState: { x: 2, y: 3, orientation: "E" },
         commands: "LFRFF",
       },
     ]);
