@@ -16,6 +16,8 @@ yarn build
 yarn start
 ```
 
+The output is logged to the console.
+
 2. Run tests
 
 ```bash
