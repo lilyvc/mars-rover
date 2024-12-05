@@ -5,48 +5,30 @@ export const calculatePosition = (
   commands: string,
   grid: Grid
 ) => {
-  let currentPosition = initialPosition;
+  let currentPosition = { ...initialPosition };
   let lost = false;
-  let lastValidPosition = initialPosition;
 
   for (const command of commands) {
-    switch (command) {
-      case "L":
-      case "R":
-        currentPosition.orientation = turn(
-          currentPosition.orientation,
-          command
-        );
-        lastValidPosition = currentPosition;
-        break;
-      case "F":
-        const [newX, newY] = moveForward(currentPosition);
-        const nextPosition = {
-          ...currentPosition,
-          x: newX,
-          y: newY,
-        };
-
-        if (isLost(nextPosition.x, nextPosition.y, grid)) {
-          lost = true;
-          break;
-        }
-
-        currentPosition = nextPosition;
-        lastValidPosition = currentPosition;
-        break;
-    }
-
     if (lost) break;
+    if (command === "L" || command === "R") {
+      currentPosition.orientation = turn(currentPosition.orientation, command);
+    } else if (command === "F") {
+      const [newX, newY] = moveForward(currentPosition);
+      if (isLost(newX, newY, grid)) {
+        lost = true;
+      } else {
+        currentPosition = { ...currentPosition, x: newX, y: newY };
+      }
+    }
   }
 
   return {
-    finalPosition: lastValidPosition,
-    lost: lost,
+    finalPosition: currentPosition,
+    lost,
   };
 };
 
-const turn = (
+export const turn = (
   currentOrientation: Orientation,
   direction: "L" | "R"
 ): Orientation => {
@@ -57,7 +39,7 @@ const turn = (
     : orientations[(index + 1) % 4];
 };
 
-const moveForward = (currentPosition: Position): [number, number] => {
+export const moveForward = (currentPosition: Position): [number, number] => {
   const { x, y, orientation } = currentPosition;
   switch (orientation) {
     case "N":
@@ -73,6 +55,6 @@ const moveForward = (currentPosition: Position): [number, number] => {
   }
 };
 
-const isLost = (x: number, y: number, grid: Grid): boolean => {
+export const isLost = (x: number, y: number, grid: Grid): boolean => {
   return x < 0 || y < 0 || x > grid.width || y > grid.height;
 };
