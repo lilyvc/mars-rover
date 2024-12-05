@@ -61,17 +61,17 @@ describe("turn", () => {
 
 describe("moveForward", () => {
   it("should calculate new State based on orientation", () => {
-    const State: State = { x: 2, y: 3, orientation: "N" };
-    expect(moveForward(State)).toEqual([2, 4]);
+    const state: State = { x: 2, y: 3, orientation: "N" };
+    expect(moveForward(state)).toEqual([2, 4]);
 
-    State.orientation = "E";
-    expect(moveForward(State)).toEqual([3, 3]);
+    state.orientation = "E";
+    expect(moveForward(state)).toEqual([3, 3]);
 
-    State.orientation = "S";
-    expect(moveForward(State)).toEqual([2, 2]);
+    state.orientation = "S";
+    expect(moveForward(state)).toEqual([2, 2]);
 
-    State.orientation = "W";
-    expect(moveForward(State)).toEqual([1, 3]);
+    state.orientation = "W";
+    expect(moveForward(state)).toEqual([1, 3]);
   });
 });
 

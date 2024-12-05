@@ -27,8 +27,8 @@ export const parseRobot = (robotString: string): Robot => {
   return { initialState, commands };
 };
 
-export const parseState = (StatePart: string): State => {
-  const [x, y, orientation] = StatePart.replace(/[()]/g, "").split(" ");
+export const parseState = (state: string): State => {
+  const [x, y, orientation] = state.replace(/[()]/g, "").split(" ");
   return {
     x: parseInt(x),
     y: parseInt(y),

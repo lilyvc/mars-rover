@@ -7,7 +7,7 @@ type Direction = "L" | "R";
  * @param initialState - Starting State {x, y, orientation}
  * @param commands - String of commands (L/R/F)
  * @param grid - Grid dimensions {width, height}
- * @returns Final State and lost status
+ * @returns Final state and lost status
  */
 export const calculateState = (
   initialState: State,

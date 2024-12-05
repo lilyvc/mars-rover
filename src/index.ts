@@ -33,6 +33,6 @@ function processRobot(robot: Robot, grid: Grid): string {
   return formatResult(finalState, lost);
 }
 
-function formatResult(State: State, lost: boolean): string {
-  return `(${State.x}, ${State.y}, ${State.orientation})${lost ? " LOST" : ""}`;
+function formatResult(state: State, lost: boolean): string {
+  return `(${state.x}, ${state.y}, ${state.orientation})${lost ? " LOST" : ""}`;
 }
